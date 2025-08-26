@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
+import { StatusBadge } from './ui/status-badge';
 import { Button } from './ui/button';
 import { Progress } from './ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
@@ -348,9 +349,7 @@ export function DashboardView() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
                       <p className="text-sm font-medium truncate">{activity.title}</p>
-                      <Badge className={`text-xs ${getStatusColor(activity.status)}`}>
-                        {activity.status}
-                      </Badge>
+                                      <StatusBadge status={activity.status} size="sm" />
                     </div>
                     <div className="flex items-center justify-between mt-1">
                       <div className="flex items-center gap-2">
@@ -430,7 +429,7 @@ export function DashboardView() {
                         <div className={`w-2 h-2 rounded-full ${getHealthStatusColor(project.healthStatus)}`}></div>
                       </div>
                       <p className="text-xs text-gray-600">{project.projectName}</p>
-                      <Badge variant="outline" className="text-xs mt-1">{project.phase}</Badge>
+                                              <StatusBadge status={project.phase} variant="outline" size="sm" />
                     </div>
                   </div>
                   

@@ -191,7 +191,7 @@ export default function App() {
     <SidebarProvider>
       <div className="flex h-screen w-full">
         {/* Left Sidebar - Always accessible */}
-        <div className="w-64 transition-all duration-300 flex-shrink-0 z-40 relative">
+        <div className="w-80 transition-all duration-300 flex-shrink-0 z-40 relative">
           <AppSidebar 
             currentView={currentView} 
             onViewChange={handleViewChangeWithHistory}

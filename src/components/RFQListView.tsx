@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Badge } from './ui/badge';
+import { StatusBadge } from './ui/status-badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Plus, Search, Filter, MoreHorizontal, Eye, Edit, Calendar, DollarSign, Building, ArrowRight, ArrowLeft } from 'lucide-react';
 import {
@@ -192,7 +193,9 @@ export const rfqData = [
     rfqNumber: 'RFQ-2024-012',
     title: 'Quality Control Equipment',
     customer: 'Acme Manufacturing Corp',
-    project: 'PRJ-2024-001',
+    // old: project: 'PRJ-2024-001',
+    // new: ensure one RFQ per project – assign this RFQ to PRJ-2024-005 (previously missing)
+    project: 'PRJ-2024-005',
     dueDate: '2024-04-01',
     status: 'Active',
     priority: 'Medium',

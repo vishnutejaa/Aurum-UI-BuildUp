@@ -144,7 +144,9 @@ const enhancedRFQData = [
     rfqNumber: 'RFQ-2024-006',
     title: 'Hydraulic Systems',
     customer: 'Acme Manufacturing Corp',
-    project: 'PRJ-2024-001',
+    // old: project: 'PRJ-2024-001',
+    // new: ensure one RFQ per project – reassign to PRJ-2024-006
+    project: 'PRJ-2024-006',
     dueDate: '2024-02-25',
     status: 'Active',
     priority: 'Medium',
@@ -158,7 +160,9 @@ const enhancedRFQData = [
     rfqNumber: 'RFQ-2024-007',
     title: 'Electrical Components',
     customer: 'Acme Manufacturing Corp',
-    project: 'PRJ-2024-001',
+    // old: project: 'PRJ-2024-001',
+    // new: ensure one RFQ per project – reassign to PRJ-2024-007
+    project: 'PRJ-2024-007',
     dueDate: '2024-03-01',
     status: 'Draft',
     priority: 'Medium',
@@ -172,7 +176,9 @@ const enhancedRFQData = [
     rfqNumber: 'RFQ-2024-008',
     title: 'Server Infrastructure',
     customer: 'Global Industries Ltd',
-    project: 'PRJ-2024-002',
+    // old: project: 'PRJ-2024-002',
+    // new: ensure one RFQ per project – reassign to PRJ-2024-008
+    project: 'PRJ-2024-008',
     dueDate: '2024-02-28',
     status: 'Active',
     priority: 'High',

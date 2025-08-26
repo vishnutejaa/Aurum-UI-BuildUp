@@ -3,6 +3,7 @@ import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Badge } from './ui/badge';
+import { StatusBadge } from './ui/status-badge';
 import { Plus, Search, Filter, MoreHorizontal, Eye, Edit, Users, Calendar, DollarSign } from 'lucide-react';
 import { PageHeader } from './PageHeader';
 import {
@@ -41,7 +42,8 @@ const projectsData = [
     status: 'Active',
     phase: 'RFQ Collection',
     totalValue: '$2,500,000',
-    rfqCount: 5,
+    // old: rfqCount: 5,
+    rfqCount: 1,
     quoteCount: 12,
     poCount: 2,
     description: 'Complete overhaul of manufacturing line with new CNC machines and automation systems'
@@ -57,7 +59,8 @@ const projectsData = [
     status: 'Active',
     phase: 'Quote Evaluation',
     totalValue: '$850,000',
-    rfqCount: 8,
+    // old: rfqCount: 8,
+    rfqCount: 1,
     quoteCount: 24,
     poCount: 5,
     description: 'IT infrastructure upgrade including servers, networking equipment, and workstations'
@@ -73,7 +76,8 @@ const projectsData = [
     status: 'Planning',
     phase: 'Requirements Gathering',
     totalValue: '$4,200,000',
-    rfqCount: 2,
+    // old: rfqCount: 2,
+    rfqCount: 1,
     quoteCount: 3,
     poCount: 0,
     description: 'Automated storage and retrieval system with robotic handling and inventory management'
@@ -89,7 +93,8 @@ const projectsData = [
     status: 'Completed',
     phase: 'Project Closure',
     totalValue: '$675,000',
-    rfqCount: 6,
+    // old: rfqCount: 6,
+    rfqCount: 1,
     quoteCount: 18,
     poCount: 8,
     description: 'Comprehensive security system including CCTV, access control, and alarm systems'
@@ -105,6 +110,7 @@ const projectsData = [
     status: 'On Hold',
     phase: 'Budget Approval',
     totalValue: '$3,100,000',
+    // old: rfqCount: 1,
     rfqCount: 1,
     quoteCount: 2,
     poCount: 0,
@@ -121,7 +127,8 @@ const projectsData = [
     status: 'Active',
     phase: 'Construction',
     totalValue: '$1,800,000',
-    rfqCount: 12,
+    // old: rfqCount: 12,
+    rfqCount: 1,
     quoteCount: 28,
     poCount: 15,
     description: 'New production line for automotive component manufacturing with quality control systems'
@@ -137,7 +144,8 @@ const projectsData = [
     status: 'Active',
     phase: 'Implementation',
     totalValue: '$2,300,000',
-    rfqCount: 9,
+    // old: rfqCount: 9,
+    rfqCount: 1,
     quoteCount: 22,
     poCount: 12,
     description: 'Upgrade of data center infrastructure with new servers, storage, and cooling systems'
@@ -153,7 +161,8 @@ const projectsData = [
     status: 'Planning',
     phase: 'Design Phase',
     totalValue: '$8,500,000',
-    rfqCount: 3,
+    // old: rfqCount: 3,
+    rfqCount: 1,
     quoteCount: 5,
     poCount: 0,
     description: 'New chemical processing facility with safety systems and environmental controls'
@@ -169,7 +178,8 @@ const projectsData = [
     status: 'Active',
     phase: 'Site Preparation',
     totalValue: '$3,800,000',
-    rfqCount: 15,
+    // old: rfqCount: 15,
+    rfqCount: 1,
     quoteCount: 35,
     poCount: 18,
     description: 'Regional logistics hub with automated sorting, storage, and distribution systems'
@@ -185,7 +195,8 @@ const projectsData = [
     status: 'Completed',
     phase: 'Project Closure',
     totalValue: '$1,200,000',
-    rfqCount: 7,
+    // old: rfqCount: 7,
+    rfqCount: 1,
     quoteCount: 19,
     poCount: 9,
     description: 'State-of-the-art research laboratory with specialized equipment and safety systems'
@@ -201,7 +212,8 @@ const projectsData = [
     status: 'Active',
     phase: 'Equipment Installation',
     totalValue: '$2,100,000',
-    rfqCount: 11,
+    // old: rfqCount: 11,
+    rfqCount: 1,
     quoteCount: 26,
     poCount: 14,
     description: 'Modernization of textile manufacturing equipment with digital control systems'
@@ -217,7 +229,8 @@ const projectsData = [
     status: 'On Hold',
     phase: 'Regulatory Approval',
     totalValue: '$4,800,000',
-    rfqCount: 4,
+    // old: rfqCount: 4,
+    rfqCount: 1,
     quoteCount: 8,
     poCount: 2,
     description: 'New food processing plant with automated packaging and quality control systems'
@@ -241,26 +254,8 @@ export function ProjectsListView({
     return matchesSearch && matchesStatus;
   });
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Active': return 'bg-green-100 text-green-800';
-      case 'Planning': return 'bg-blue-100 text-blue-800';
-      case 'On Hold': return 'bg-yellow-100 text-yellow-800';
-      case 'Completed': return 'bg-gray-100 text-gray-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  };
-
-  const getPhaseColor = (phase: string) => {
-    switch (phase) {
-      case 'Requirements Gathering': return 'bg-purple-100 text-purple-800';
-      case 'RFQ Collection': return 'bg-blue-100 text-blue-800';
-      case 'Quote Evaluation': return 'bg-orange-100 text-orange-800';
-      case 'Budget Approval': return 'bg-yellow-100 text-yellow-800';
-      case 'Project Closure': return 'bg-gray-100 text-gray-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  };
+  // old: Custom status color functions
+  // new: Using standardized StatusBadge component for consistency
 
   return (
     <div className="h-full flex flex-col">
@@ -356,26 +351,22 @@ export function ProjectsListView({
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Badge className={getStatusColor(project.status)}>
-                        {project.status}
-                      </Badge>
+                      <StatusBadge status={project.status} size="md" />
                     </TableCell>
                     <TableCell>
-                      <Badge variant="outline" className={getPhaseColor(project.phase)}>
-                        {project.phase}
-                      </Badge>
+                      <StatusBadge status={project.phase} variant="outline" size="md" />
                     </TableCell>
                     <TableCell>
-                      <div className="flex gap-1 text-xs">
-                        <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                      <div className="flex gap-1">
+                        <Badge variant="outline" className="text-xs px-2 py-0.5">
                           {project.rfqCount} RFQs
-                        </span>
-                        <span className="bg-green-100 text-green-800 px-2 py-1 rounded">
+                        </Badge>
+                        <Badge variant="outline" className="text-xs px-2 py-0.5">
                           {project.quoteCount} Quotes
-                        </span>
-                        <span className="bg-orange-100 text-orange-800 px-2 py-1 rounded">
+                        </Badge>
+                        <Badge variant="outline" className="text-xs px-2 py-0.5">
                           {project.poCount} POs
-                        </span>
+                        </Badge>
                       </div>
                     </TableCell>
                     <TableCell>

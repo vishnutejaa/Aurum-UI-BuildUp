@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+// old: import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem } from './ui/sidebar';
+// new: added SidebarHeader to place a logo at the top of the sidebar
 import {
   Sidebar,
   SidebarContent,
@@ -11,6 +13,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  SidebarHeader,
 } from './ui/sidebar';
 import { 
   Settings, 
@@ -39,6 +42,12 @@ import {
   TrendingUp
 } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible';
+
+// old: (no logo import)
+// new: import the Aurum Impex logo to display in the sidebar header
+// old: import aurumLogo from '../../assets/aurum-impex-web-logo-gold-white.png';
+// new: use URL-based asset reference for TypeScript compatibility without additional type declarations
+const aurumLogo = new URL('../../assets/aurum-impex-web-logo-gold-blacktext-v2.png', import.meta.url).href;
 
 
 interface AppSidebarProps {
@@ -137,29 +146,53 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
   return (
     <Sidebar>
       <SidebarContent>
+        {/* old: no header/logo at the top */}
+        {/* new: sidebar header with company logo */}
+        <SidebarHeader className="px-3 pt-3 pb-1">
+          <div className="flex items-center">
+            <div className="bg-gray-200 rounded p-1">
+              <img src={aurumLogo} alt="AURUM IMPEX" className="h-16 w-auto" />
+            </div>
+          </div>
+        </SidebarHeader>
 
         
+        {/* old: Dashboard was inside RFQ MANAGEMENT */}
+        {/* new: Dashboard as separate section */}
         <SidebarGroup>
-          <SidebarGroupLabel>RFQ MANAGEMENT</SidebarGroupLabel>
+          <SidebarGroupLabel>DASHBOARD</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('dashboard')}
                   isActive={currentView === 'dashboard'}
+                  className="pl-0"
                 >
                   <Database className="h-4 w-4" />
                   <span>Dashboard</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
 
-              {/* Projects Section */}
+        {/* old: RFQ MANAGEMENT section */}
+        {/* new: RFQ MANAGEMENT section - reorganized */}
+        <SidebarGroup>
+          <SidebarGroupLabel>RFQ MANAGEMENT</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+
+              {/* old: Projects Section - standalone collapsible */}
+              {/* new: Projects Section - remains as is */}
               <Collapsible defaultOpen={currentView === 'projects' || currentView.startsWith('project-')}>
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuButton 
                       onClick={() => handleNavigation('projects')}
                       isActive={currentView === 'projects' || currentView.startsWith('project-')}
+                      className="pl-0"
                     >
                       <Briefcase className="h-4 w-4" />
                       <span>Projects</span>
@@ -193,11 +226,13 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 </SidebarMenuItem>
               </Collapsible>
 
-              {/* Standalone Operations */}
+              {/* old: Procurement Operations - collapsible group */}
+              {/* new: Standalone Operations - flat list */}
               <SidebarMenuItem>
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('rfq')}
                   isActive={currentView === 'rfq'}
+                  className="pl-0"
                 >
                   <HelpCircle className="h-4 w-4" />
                   <span>RFQs</span>
@@ -208,6 +243,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('quotes')}
                   isActive={currentView === 'quotes'}
+                  className="pl-0"
                 >
                   <MessageSquare className="h-4 w-4" />
                   <span>Quotes</span>
@@ -218,6 +254,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('po')}
                   isActive={currentView === 'po'}
+                  className="pl-0"
                 >
                   <DollarSign className="h-4 w-4" />
                   <span>Purchase Orders</span>
@@ -228,6 +265,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('goods')}
                   isActive={currentView === 'goods'}
+                  className="pl-0"
                 >
                   <ShoppingCart className="h-4 w-4" />
                   <span>Goods</span>
@@ -238,6 +276,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('payments')}
                   isActive={currentView === 'payments'}
+                  className="pl-0"
                 >
                   <CreditCard className="h-4 w-4" />
                   <span>Payments</span>
@@ -248,35 +287,58 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('reports')}
                   isActive={currentView === 'reports'}
+                  className="pl-0"
                 >
                   <TrendingUp className="h-4 w-4" />
                   <span>Reports & Analytics</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
-              {/* Master Data Section */}
-              <SidebarMenuItem>
-                {/* Fixed Master Data Label */}
-                <div className="px-3 py-2 border-t border-sidebar-border mt-2">
-                  <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Master Data</span>
-                </div>
-              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
 
-              {/* Master Data Categories */}
-              {masterDataGroups.map((group) => 
-                group.items.map((item) => (
-                  <SidebarMenuItem key={item.id}>
-                    <SidebarMenuButton
-                      onClick={() => handleNavigation('masters', item.id)}
-                      isActive={currentView === 'masters' && currentMasterData === item.id}
-                      className="pl-6"
-                    >
-                      <item.icon className="h-4 w-4" />
-                      <span>{item.label}</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))
-              )}
+        {/* old: Master Data Section - inline label */}
+        {/* new: Master Data Section - proper group structure */}
+        <SidebarGroup>
+          <SidebarGroupLabel>MASTER DATA</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {/* Master Data Categories - all groups are collapsible */}
+              {masterDataGroups.map((group) => {
+                return (
+                  <Collapsible key={group.id} defaultOpen={currentView === 'masters' && (currentMasterData === group.id || currentMasterData.startsWith(group.id))}>
+                    <SidebarMenuItem>
+                      <CollapsibleTrigger asChild>
+                        <SidebarMenuButton 
+                          onClick={() => handleNavigation('masters', group.id)}
+                          isActive={currentView === 'masters' && currentMasterData === group.id}
+                          className="pl-6"
+                        >
+                          <group.icon className="h-4 w-4" />
+                          <span>{group.label}</span>
+                          <ChevronRight className="ml-auto h-4 w-4 transition-transform group-data-[state=open]:rotate-90" />
+                        </SidebarMenuButton>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent>
+                        <SidebarMenuSub>
+                          {group.items.map((item) => (
+                            <SidebarMenuSubItem key={item.id}>
+                              <SidebarMenuSubButton
+                                onClick={() => handleNavigation('masters', item.id)}
+                                isActive={currentView === 'masters' && currentMasterData === item.id}
+                              >
+                                <item.icon className="h-3 w-3" />
+                                <span>{item.label}</span>
+                              </SidebarMenuSubButton>
+                            </SidebarMenuSubItem>
+                          ))}
+                        </SidebarMenuSub>
+                      </CollapsibleContent>
+                    </SidebarMenuItem>
+                  </Collapsible>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

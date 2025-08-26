@@ -92,14 +92,15 @@ const LiquidSvg = () => (
 
 export function Header() {
   return (
-    <header className="border-b bg-white px-3 py-0.5 flex items-center justify-between">
+    <header className="border-b bg-white px-6 py-6 flex items-center justify-between">
       <div className="flex items-center gap-4">
-        {/* Animated Blue Liquid Logo Title */}
-        <div className="flex items-center ml-2" id="aurum-impex-logo">
+        {/* old: Animated Blue Liquid Logo Title */}
+        {/* new: commented out logo for now - keeping sidebar logo instead */}
+        {/* <div className="flex items-center ml-2" id="aurum-impex-logo">
           <SvgText svg={<LiquidSvg />} fontSize="2.5rem" fontWeight="900" className="aurum-impex-title">
             AURUM IMPEX
           </SvgText>
-        </div>
+        </div> */}
 
         {/* Search Bar */}
         <div className="relative w-96">

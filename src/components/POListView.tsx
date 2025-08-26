@@ -3,6 +3,7 @@ import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Badge } from './ui/badge';
+import { StatusBadge } from './ui/status-badge';
 import { Plus, Search, Filter, MoreHorizontal, Eye, Edit, Calendar, DollarSign, Building } from 'lucide-react';
 import { PageHeader } from './PageHeader';
 import {
@@ -217,16 +218,8 @@ export function POListView({
     return matchesSearch && matchesStatus;
   });
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Pending Approval': return 'bg-yellow-100 text-yellow-800';
-      case 'Approved': return 'bg-blue-100 text-blue-800';
-      case 'In Transit': return 'bg-purple-100 text-purple-800';
-      case 'Delivered': return 'bg-green-100 text-green-800';
-      case 'Cancelled': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  };
+  // old: Custom status color function
+  // new: Using standardized StatusBadge component for consistency
 
   return (
     <div className="h-full flex flex-col">
@@ -328,9 +321,7 @@ export function POListView({
                       <span className="text-sm">{po.expectedDelivery}</span>
                     </TableCell>
                     <TableCell>
-                      <Badge className={getStatusColor(po.status)}>
-                        {po.status}
-                      </Badge>
+                      <StatusBadge status={po.status} size="md" />
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">

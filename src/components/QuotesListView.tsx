@@ -3,6 +3,7 @@ import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Badge } from './ui/badge';
+import { StatusBadge } from './ui/status-badge';
 import { Plus, Search, Filter, MoreHorizontal, Eye, Edit, Calendar, DollarSign, Building } from 'lucide-react';
 import { PageHeader } from './PageHeader';
 import {
@@ -217,15 +218,8 @@ export function QuotesListView({
     return matchesSearch && matchesStatus;
   });
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Pending': return 'bg-yellow-100 text-yellow-800';
-      case 'Under Review': return 'bg-blue-100 text-blue-800';
-      case 'Accepted': return 'bg-green-100 text-green-800';
-      case 'Rejected': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  };
+  // old: Custom status color function
+  // new: Using standardized StatusBadge component for consistency
 
   return (
     <div className="h-full flex flex-col">
@@ -327,9 +321,7 @@ export function QuotesListView({
                       <span className="text-sm">{quote.validUntil}</span>
                     </TableCell>
                     <TableCell>
-                      <Badge className={getStatusColor(quote.status)}>
-                        {quote.status}
-                      </Badge>
+                      <StatusBadge status={quote.status} size="md" />
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
