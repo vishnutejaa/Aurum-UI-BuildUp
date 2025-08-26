@@ -3,7 +3,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Badge } from './ui/badge';
-import { Plus, Search, Filter, MoreHorizontal, Eye, Edit, Calendar, DollarSign, Building } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { Plus, Search, Filter, MoreHorizontal, Eye, Edit, Calendar, DollarSign, Building, ArrowRight, ArrowLeft } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -20,12 +21,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
+import { RFQInView } from './rfq/RFQInView';
+import { RFQOutView } from './rfq/RFQOutView';
+import { PageHeader } from './PageHeader';
 
 interface RFQListViewProps {
   onItemSelect: (item: any, itemType: string) => void;
+  navigationHistory?: Array<{view: string, masterData?: string, label: string}>;
+  onBack?: () => void;
+  onNavigate?: (item: {view: string, masterData?: string, label: string}) => void;
 }
 
-const rfqData = [
+export const rfqData = [
   {
     id: 1,
     rfqNumber: 'RFQ-2024-001',
@@ -84,188 +91,183 @@ const rfqData = [
   }
 ];
 
-export function RFQListView({ onItemSelect }: RFQListViewProps) {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('All');
-  
-  const filteredRFQs = rfqData.filter(rfq => {
-    const matchesSearch = rfq.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         rfq.rfqNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         rfq.customer.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === 'All' || rfq.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
+export function RFQListView({ 
+  onItemSelect, 
+  navigationHistory = [], 
+  onBack, 
+  onNavigate 
+}: RFQListViewProps) {
+  const [activeTab, setActiveTab] = useState('overview');
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Active': return 'bg-green-100 text-green-800';
-      case 'Draft': return 'bg-blue-100 text-blue-800';
-      case 'Closed': return 'bg-gray-100 text-gray-800';
-      case 'Expired': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  };
+  if (activeTab === 'inbound') {
+    return <RFQInView 
+      onItemSelect={onItemSelect} 
+      navigationHistory={navigationHistory}
+      onBack={onBack}
+      onNavigate={onNavigate}
+    />;
+  }
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'High': return 'bg-red-100 text-red-800';
-      case 'Medium': return 'bg-yellow-100 text-yellow-800';
-      case 'Low': return 'bg-green-100 text-green-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  };
+  if (activeTab === 'outbound') {
+    return <RFQOutView 
+      onItemSelect={onItemSelect}
+      navigationHistory={navigationHistory}
+      onBack={onBack}
+      onNavigate={onNavigate}
+    />;
+  }
 
+  // Overview/Dashboard view
   return (
-    <div className="p-6 space-y-6">
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle>Request for Quotations (RFQs)</CardTitle>
-              <CardDescription className="mt-2">
-                Manage incoming and outgoing RFQs across all projects and customers
-              </CardDescription>
-            </div>
-            <div className="flex gap-2">
-              <Button variant="outline" size="sm">
-                <Filter className="h-4 w-4 mr-2" />
-                Filter
-              </Button>
-              <Button size="sm">
-                <Plus className="h-4 w-4 mr-2" />
-                New RFQ
-              </Button>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-center gap-4 mb-6">
-            <div className="relative flex-1 max-w-sm">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <Input
-                placeholder="Search RFQs..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            <div className="flex gap-2">
-              {['All', 'Active', 'Draft', 'Closed', 'Expired'].map((status) => (
-                <Button
-                  key={status}
-                  variant={statusFilter === status ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setStatusFilter(status)}
-                >
-                  {status}
-                </Button>
-              ))}
-            </div>
+    <div className="h-full flex flex-col">
+      <PageHeader
+        title="RFQ Management"
+        subtitle="Comprehensive view of all RFQ activities - incoming requests and outbound quotations"
+        navigationHistory={navigationHistory}
+        onBack={onBack}
+        onNavigate={onNavigate}
+        actions={
+          <>
+            <Button variant="outline" size="sm">
+              <Filter className="h-4 w-4 mr-2" />
+              Filter
+            </Button>
+            <Button size="sm">
+              <Plus className="h-4 w-4 mr-2" />
+              Quick Actions
+            </Button>
+          </>
+        }
+      />
+      
+      <div className="flex-1 p-6 space-y-6">
+
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="inbound" className="flex items-center gap-2">
+            <ArrowLeft className="h-4 w-4" />
+            Inbound RFQs
+          </TabsTrigger>
+          <TabsTrigger value="outbound" className="flex items-center gap-2">
+            <ArrowRight className="h-4 w-4" />
+            Outbound RFQs
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="overview" className="mt-6">
+          {/* RFQ Dashboard */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Active Inbound RFQs</CardTitle>
+                <ArrowLeft className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">12</div>
+                <p className="text-xs text-muted-foreground">+2 from last week</p>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Active Outbound RFQs</CardTitle>
+                <ArrowRight className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">8</div>
+                <p className="text-xs text-muted-foreground">-1 from last week</p>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Pending Responses</CardTitle>
+                <Calendar className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">24</div>
+                <p className="text-xs text-muted-foreground">5 due today</p>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Total RFQ Value</CardTitle>
+                <DollarSign className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">$1.2M</div>
+                <p className="text-xs text-muted-foreground">+15% from last month</p>
+              </CardContent>
+            </Card>
           </div>
 
-          <div className="rounded-md border">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>RFQ</TableHead>
-                  <TableHead>Customer</TableHead>
-                  <TableHead>Project</TableHead>
-                  <TableHead>Due Date</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Priority</TableHead>
-                  <TableHead>Responses</TableHead>
-                  <TableHead>Est. Value</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredRFQs.map((rfq) => (
-                  <TableRow 
-                    key={rfq.id}
-                    className="cursor-pointer hover:bg-muted/50"
-                    onClick={() => onItemSelect(rfq, 'rfq')}
-                  >
-                    <TableCell>
-                      <div>
-                        <p className="font-medium text-blue-600 hover:underline">{rfq.rfqNumber}</p>
-                        <p className="text-sm text-gray-600">{rfq.title}</p>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Building className="h-3 w-3 text-gray-400" />
-                        <span className="text-sm">{rfq.customer}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline">{rfq.project}</Badge>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-3 w-3 text-gray-400" />
-                        <span className="text-sm">{rfq.dueDate}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge className={getStatusColor(rfq.status)}>
-                        {rfq.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline" className={getPriorityColor(rfq.priority)}>
-                        {rfq.priority}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <div className="text-sm">
-                        <span className="font-medium">{rfq.responsesReceived}</span>
-                        <span className="text-gray-500"> / {rfq.suppliersInvited}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <DollarSign className="h-3 w-3 text-gray-400" />
-                        <span className="font-medium">{rfq.estimatedValue}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" className="h-8 w-8 p-0" onClick={(e) => e.stopPropagation()}>
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem onClick={(e) => {
-                            e.stopPropagation();
-                            onItemSelect(rfq, 'rfq');
-                          }}>
-                            <Eye className="mr-2 h-4 w-4" />
-                            View Details
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={(e) => e.stopPropagation()}>
-                            <Edit className="mr-2 h-4 w-4" />
-                            Edit RFQ
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={(e) => e.stopPropagation()}>
-                            View Responses
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={(e) => e.stopPropagation()}>
-                            Send Reminder
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+          {/* Quick Actions */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <ArrowLeft className="h-5 w-5" />
+                  Inbound RFQ Actions
+                </CardTitle>
+                <CardDescription>
+                  Manage incoming requests from customers and internal departments
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Button 
+                  className="w-full justify-start" 
+                  variant="outline"
+                  onClick={() => setActiveTab('inbound')}
+                >
+                  <Eye className="h-4 w-4 mr-2" />
+                  View All Inbound RFQs
+                </Button>
+                <Button className="w-full justify-start" variant="outline">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Create External RFQ
+                </Button>
+                <Button className="w-full justify-start" variant="outline">
+                  <Building className="h-4 w-4 mr-2" />
+                  Create Internal RFQ
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <ArrowRight className="h-5 w-5" />
+                  Outbound RFQ Actions
+                </CardTitle>
+                <CardDescription>
+                  Generate and send RFQs to suppliers based on customer requirements
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Button 
+                  className="w-full justify-start" 
+                  variant="outline"
+                  onClick={() => setActiveTab('outbound')}
+                >
+                  <Eye className="h-4 w-4 mr-2" />
+                  View All Outbound RFQs
+                </Button>
+                <Button className="w-full justify-start" variant="outline">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Generate RFQ for External
+                </Button>
+                <Button className="w-full justify-start" variant="outline">
+                  <Building className="h-4 w-4 mr-2" />
+                  Generate RFQ for Internal
+                </Button>
+              </CardContent>
+            </Card>
           </div>
-        </CardContent>
-      </Card>
+        </TabsContent>
+      </Tabs>
+      </div>
     </div>
   );
 }

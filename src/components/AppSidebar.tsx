@@ -35,7 +35,8 @@ import {
   Target,
   ChevronRight,
   FolderOpen,
-  Briefcase
+  Briefcase,
+  TrendingUp
 } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible';
 
@@ -45,6 +46,7 @@ interface AppSidebarProps {
   onViewChange: (view: string) => void;
   currentMasterData: string;
   onMasterDataChange: (section: string) => void;
+  onNavigate?: () => void;
 }
 
 const masterDataGroups = [
@@ -113,12 +115,24 @@ const masterDataGroups = [
 ];
 
 const projectSubItems = [
-  { id: 'project-rfqs', label: 'Project RFQs', icon: HelpCircle },
-  { id: 'project-quotes', label: 'Project Quotes', icon: MessageSquare },
-  { id: 'project-pos', label: 'Project POs', icon: DollarSign },
+  { id: 'projects', label: 'All Projects', icon: FolderOpen },
+  { id: 'rfq', label: 'Project RFQs', icon: HelpCircle },
+  { id: 'quotes', label: 'Project Quotes', icon: MessageSquare },
+  { id: 'po', label: 'Project POs', icon: DollarSign },
 ];
 
-export function AppSidebar({ currentView, onViewChange, currentMasterData, onMasterDataChange }: AppSidebarProps) {
+export function AppSidebar({ currentView, onViewChange, currentMasterData, onMasterDataChange, onNavigate }: AppSidebarProps) {
+
+  const handleNavigation = (view: string, masterData?: string) => {
+    // Only close panels if we're navigating to a different view
+    if (view !== 'projects' || masterData) {
+      onNavigate?.(); // Close any open panels
+    }
+    onViewChange(view);
+    if (masterData) {
+      onMasterDataChange(masterData);
+    }
+  };
 
   return (
     <Sidebar>
@@ -129,7 +143,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton 
-                  onClick={() => onViewChange('dashboard')}
+                  onClick={() => handleNavigation('dashboard')}
                   isActive={currentView === 'dashboard'}
                 >
                   <Database className="h-4 w-4" />
@@ -142,7 +156,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuButton 
-                      onClick={() => onViewChange('projects')}
+                      onClick={() => handleNavigation('projects')}
                       isActive={currentView === 'projects' || currentView.startsWith('project-')}
                     >
                       <Briefcase className="h-4 w-4" />
@@ -154,17 +168,17 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                     <SidebarMenuSub>
                       <SidebarMenuSubItem>
                         <SidebarMenuSubButton
-                          onClick={() => onViewChange('projects')}
+                          onClick={() => handleNavigation('projects')}
                           isActive={currentView === 'projects'}
                         >
                           <FolderOpen className="h-3 w-3" />
                           <span>All Projects</span>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
-                      {projectSubItems.map((item) => (
+                      {projectSubItems.slice(1).map((item) => (
                         <SidebarMenuSubItem key={item.id}>
                           <SidebarMenuSubButton
-                            onClick={() => onViewChange(item.id)}
+                            onClick={() => handleNavigation(item.id)}
                             isActive={currentView === item.id}
                           >
                             <item.icon className="h-3 w-3" />
@@ -180,7 +194,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
               {/* Standalone Operations */}
               <SidebarMenuItem>
                 <SidebarMenuButton 
-                  onClick={() => onViewChange('rfq')}
+                  onClick={() => handleNavigation('rfq')}
                   isActive={currentView === 'rfq'}
                 >
                   <HelpCircle className="h-4 w-4" />
@@ -190,7 +204,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
 
               <SidebarMenuItem>
                 <SidebarMenuButton 
-                  onClick={() => onViewChange('quotes')}
+                  onClick={() => handleNavigation('quotes')}
                   isActive={currentView === 'quotes'}
                 >
                   <MessageSquare className="h-4 w-4" />
@@ -200,7 +214,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
 
               <SidebarMenuItem>
                 <SidebarMenuButton 
-                  onClick={() => onViewChange('po')}
+                  onClick={() => handleNavigation('po')}
                   isActive={currentView === 'po'}
                 >
                   <DollarSign className="h-4 w-4" />
@@ -210,7 +224,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
 
               <SidebarMenuItem>
                 <SidebarMenuButton 
-                  onClick={() => onViewChange('goods')}
+                  onClick={() => handleNavigation('goods')}
                   isActive={currentView === 'goods'}
                 >
                   <ShoppingCart className="h-4 w-4" />
@@ -220,11 +234,21 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
 
               <SidebarMenuItem>
                 <SidebarMenuButton 
-                  onClick={() => onViewChange('payments')}
+                  onClick={() => handleNavigation('payments')}
                   isActive={currentView === 'payments'}
                 >
                   <CreditCard className="h-4 w-4" />
                   <span>Payments</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                  onClick={() => handleNavigation('reports')}
+                  isActive={currentView === 'reports'}
+                >
+                  <TrendingUp className="h-4 w-4" />
+                  <span>Reports & Analytics</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
@@ -241,10 +265,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 group.items.map((item) => (
                   <SidebarMenuItem key={item.id}>
                     <SidebarMenuButton
-                      onClick={() => {
-                        onViewChange('masters');
-                        onMasterDataChange(item.id);
-                      }}
+                      onClick={() => handleNavigation('masters', item.id)}
                       isActive={currentView === 'masters' && currentMasterData === item.id}
                       className="pl-6"
                     >

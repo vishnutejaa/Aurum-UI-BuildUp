@@ -16,8 +16,29 @@ import { SidebarTrigger } from './ui/sidebar';
 export function Header() {
   return (
     <header className="border-b bg-white px-4 py-3 flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        {/* <SidebarTrigger /> */}
+      <div className="flex items-center gap-6">
+        {/* Stylish Logo Title */}
+        <div className="flex items-center">
+          <div className="relative">
+            {/* AURUM - Yellow gradient with blue accent */}
+            <div className="text-2xl font-bold tracking-wider">
+              <span className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent">
+                AURUM
+              </span>
+              <span className="text-blue-600 ml-1">•</span>
+            </div>
+            {/* IMPEX - Blue with black shadow */}
+            <div className="text-xl font-semibold tracking-wide -mt-1">
+              <span className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent drop-shadow-sm">
+                IMPEX
+              </span>
+            </div>
+            {/* Subtle underline accent */}
+            <div className="h-0.5 bg-gradient-to-r from-yellow-400 via-blue-600 to-black mt-1 rounded-full opacity-80"></div>
+          </div>
+        </div>
+
+        {/* Search Bar */}
         <div className="relative w-96">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
           <Input 

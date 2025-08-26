@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
+import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Badge } from './ui/badge';
 import { Plus, Search, Filter, MoreHorizontal, Eye, Edit, Calendar, Package, Building } from 'lucide-react';
+import { PageHeader } from './PageHeader';
 import {
   Table,
   TableBody,
@@ -23,9 +24,12 @@ import {
 
 interface GoodsListViewProps {
   onItemSelect: (item: any, itemType: string) => void;
+  navigationHistory?: Array<{view: string, masterData?: string, label: string}>;
+  onBack?: () => void;
+  onNavigate?: (item: {view: string, masterData?: string, label: string}) => void;
 }
 
-const goodsData = [
+export const goodsData = [
   {
     id: 1,
     shipmentNumber: 'SH-2024-001',
@@ -84,7 +88,12 @@ const goodsData = [
   }
 ];
 
-export function GoodsListView({ onItemSelect }: GoodsListViewProps) {
+export function GoodsListView({ 
+  onItemSelect, 
+  navigationHistory = [], 
+  onBack, 
+  onNavigate 
+}: GoodsListViewProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   
@@ -109,28 +118,29 @@ export function GoodsListView({ onItemSelect }: GoodsListViewProps) {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="h-full flex flex-col">
+      <PageHeader
+        title="Goods Management"
+        subtitle="Track shipments, deliveries, and inventory from suppliers"
+        navigationHistory={navigationHistory}
+        onBack={onBack}
+        onNavigate={onNavigate}
+        actions={
+          <>
+            <Button variant="outline" size="sm">
+              <Filter className="h-4 w-4 mr-2" />
+              Filter
+            </Button>
+            <Button size="sm">
+              <Plus className="h-4 w-4 mr-2" />
+              Record Receipt
+            </Button>
+          </>
+        }
+      />
+
+      <div className="flex-1 p-6 space-y-6">
       <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle>Goods Management</CardTitle>
-              <CardDescription className="mt-2">
-                Track shipments, deliveries, and inventory from suppliers
-              </CardDescription>
-            </div>
-            <div className="flex gap-2">
-              <Button variant="outline" size="sm">
-                <Filter className="h-4 w-4 mr-2" />
-                Filter
-              </Button>
-              <Button size="sm">
-                <Plus className="h-4 w-4 mr-2" />
-                Record Receipt
-              </Button>
-            </div>
-          </div>
-        </CardHeader>
         <CardContent>
           <div className="flex items-center gap-4 mb-6">
             <div className="relative flex-1 max-w-sm">
@@ -260,6 +270,7 @@ export function GoodsListView({ onItemSelect }: GoodsListViewProps) {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }

@@ -8,11 +8,15 @@ import { CustomersTable } from './master-data/CustomersTable';
 import { SuppliersTable } from './master-data/SuppliersTable';
 import { UsersTable } from './master-data/UsersTable';
 import { GenericMasterTable } from './master-data/GenericMasterTable';
+import { PageHeader } from './PageHeader';
 
 interface MasterDataViewProps {
   activeSection: string;
   onSectionChange: (section: string) => void;
   onItemSelect?: (item: any, itemType: string) => void;
+  navigationHistory?: Array<{view: string, masterData?: string, label: string}>;
+  onBack?: () => void;
+  onNavigate?: (item: {view: string, masterData?: string, label: string}) => void;
 }
 
 const masterDataConfig = {
@@ -49,7 +53,14 @@ const masterDataConfig = {
   'page-permissions': { title: 'Page Permissions', description: 'Manage user access permissions', group: 'System Configuration' },
 };
 
-export function MasterDataView({ activeSection, onSectionChange, onItemSelect }: MasterDataViewProps) {
+export function MasterDataView({ 
+  activeSection, 
+  onSectionChange, 
+  onItemSelect,
+  navigationHistory = [],
+  onBack,
+  onNavigate
+}: MasterDataViewProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const currentConfig = masterDataConfig[activeSection as keyof typeof masterDataConfig];
 
@@ -74,47 +85,35 @@ export function MasterDataView({ activeSection, onSectionChange, onItemSelect }:
   };
 
   return (
-    <div className="p-6 space-y-6">
-      {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-gray-600">
-        <span>Masters</span>
-        <ChevronRight className="h-4 w-4" />
-        <span>{currentConfig?.group || 'Master Data'}</span>
-        <ChevronRight className="h-4 w-4" />
-        <span className="text-gray-900 font-medium">{currentConfig?.title || 'Data'}</span>
-      </div>
+    <div className="h-full flex flex-col">
+      <PageHeader
+        title={currentConfig?.title || 'Master Data'}
+        subtitle={currentConfig?.description || 'Manage master data entries'}
+        navigationHistory={navigationHistory}
+        onBack={onBack}
+        onNavigate={onNavigate}
+        actions={
+          <>
+            <Button variant="outline" size="sm">
+              <Upload className="h-4 w-4 mr-2" />
+              Import
+            </Button>
+            <Button variant="outline" size="sm">
+              <Download className="h-4 w-4 mr-2" />
+              Export
+            </Button>
+            <Button size="sm">
+              <Plus className="h-4 w-4 mr-2" />
+              Add New
+            </Button>
+          </>
+        }
+      />
+    
+    <div className="flex-1 p-6 space-y-6">
 
       <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle className="flex items-center gap-2">
-                {currentConfig?.title || 'Master Data'}
-                <span className="text-sm font-normal text-gray-500 bg-gray-100 px-2 py-1 rounded-md">
-                  {currentConfig?.group || 'General'}
-                </span>
-              </CardTitle>
-              <CardDescription className="mt-2">
-                {currentConfig?.description || 'Manage master data entries'}
-              </CardDescription>
-            </div>
-            <div className="flex gap-2">
-              <Button variant="outline" size="sm">
-                <Upload className="h-4 w-4 mr-2" />
-                Import
-              </Button>
-              <Button variant="outline" size="sm">
-                <Download className="h-4 w-4 mr-2" />
-                Export
-              </Button>
-              <Button size="sm">
-                <Plus className="h-4 w-4 mr-2" />
-                Add New
-              </Button>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent>
+        <CardContent className="p-6">
           <div className="flex items-center gap-4 mb-6">
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -134,6 +133,7 @@ export function MasterDataView({ activeSection, onSectionChange, onItemSelect }:
           {renderTable()}
         </CardContent>
       </Card>
+    </div>
     </div>
   );
 }

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
+import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Badge } from './ui/badge';
 import { Plus, Search, Filter, MoreHorizontal, Eye, Edit, Calendar, DollarSign, Building } from 'lucide-react';
+import { PageHeader } from './PageHeader';
 import {
   Table,
   TableBody,
@@ -23,9 +24,12 @@ import {
 
 interface QuotesListViewProps {
   onItemSelect: (item: any, itemType: string) => void;
+  navigationHistory?: Array<{view: string, masterData?: string, label: string}>;
+  onBack?: () => void;
+  onNavigate?: (item: {view: string, masterData?: string, label: string}) => void;
 }
 
-const quotesData = [
+export const quotesData = [
   {
     id: 1,
     quoteNumber: 'QUO-2024-001',
@@ -84,7 +88,12 @@ const quotesData = [
   }
 ];
 
-export function QuotesListView({ onItemSelect }: QuotesListViewProps) {
+export function QuotesListView({ 
+  onItemSelect, 
+  navigationHistory = [], 
+  onBack, 
+  onNavigate 
+}: QuotesListViewProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   
@@ -107,28 +116,29 @@ export function QuotesListView({ onItemSelect }: QuotesListViewProps) {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="h-full flex flex-col">
+      <PageHeader
+        title="Quotes"
+        subtitle="Manage supplier quotes and evaluate responses to RFQs"
+        navigationHistory={navigationHistory}
+        onBack={onBack}
+        onNavigate={onNavigate}
+        actions={
+          <>
+            <Button variant="outline" size="sm">
+              <Filter className="h-4 w-4 mr-2" />
+              Filter
+            </Button>
+            <Button size="sm">
+              <Plus className="h-4 w-4 mr-2" />
+              New Quote
+            </Button>
+          </>
+        }
+      />
+
+      <div className="flex-1 p-6 space-y-6">
       <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle>Quotes</CardTitle>
-              <CardDescription className="mt-2">
-                Manage supplier quotes and evaluate responses to RFQs
-              </CardDescription>
-            </div>
-            <div className="flex gap-2">
-              <Button variant="outline" size="sm">
-                <Filter className="h-4 w-4 mr-2" />
-                Filter
-              </Button>
-              <Button size="sm">
-                <Plus className="h-4 w-4 mr-2" />
-                New Quote
-              </Button>
-            </div>
-          </div>
-        </CardHeader>
         <CardContent>
           <div className="flex items-center gap-4 mb-6">
             <div className="relative flex-1 max-w-sm">
@@ -256,6 +266,7 @@ export function QuotesListView({ onItemSelect }: QuotesListViewProps) {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }
