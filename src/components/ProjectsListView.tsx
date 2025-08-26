@@ -109,6 +109,118 @@ const projectsData = [
     quoteCount: 2,
     poCount: 0,
     description: 'Solar panel installation and energy storage systems for sustainable operations'
+  },
+  {
+    id: 6,
+    projectCode: 'PRJ-2024-006',
+    projectName: 'Production Line Expansion',
+    customer: 'Automotive Parts Ltd',
+    projectManager: 'Robert Kim',
+    startDate: '2024-02-15',
+    endDate: '2024-09-30',
+    status: 'Active',
+    phase: 'Construction',
+    totalValue: '$1,800,000',
+    rfqCount: 12,
+    quoteCount: 28,
+    poCount: 15,
+    description: 'New production line for automotive component manufacturing with quality control systems'
+  },
+  {
+    id: 7,
+    projectCode: 'PRJ-2024-007',
+    projectName: 'Data Center Modernization',
+    customer: 'Digital Solutions Corp',
+    projectManager: 'Jennifer Martinez',
+    startDate: '2024-01-20',
+    endDate: '2024-07-15',
+    status: 'Active',
+    phase: 'Implementation',
+    totalValue: '$2,300,000',
+    rfqCount: 9,
+    quoteCount: 22,
+    poCount: 12,
+    description: 'Upgrade of data center infrastructure with new servers, storage, and cooling systems'
+  },
+  {
+    id: 8,
+    projectCode: 'PRJ-2024-008',
+    projectName: 'Chemical Processing Plant',
+    customer: 'Industrial Chemicals Inc',
+    projectManager: 'Thomas Wang',
+    startDate: '2024-03-10',
+    endDate: '2025-02-28',
+    status: 'Planning',
+    phase: 'Design Phase',
+    totalValue: '$8,500,000',
+    rfqCount: 3,
+    quoteCount: 5,
+    poCount: 0,
+    description: 'New chemical processing facility with safety systems and environmental controls'
+  },
+  {
+    id: 9,
+    projectCode: 'PRJ-2024-009',
+    projectName: 'Logistics Hub Development',
+    customer: 'Global Logistics Group',
+    projectManager: 'Amanda Foster',
+    startDate: '2024-02-28',
+    endDate: '2024-12-15',
+    status: 'Active',
+    phase: 'Site Preparation',
+    totalValue: '$3,800,000',
+    rfqCount: 15,
+    quoteCount: 35,
+    poCount: 18,
+    description: 'Regional logistics hub with automated sorting, storage, and distribution systems'
+  },
+  {
+    id: 10,
+    projectCode: 'PRJ-2024-010',
+    projectName: 'Research Laboratory Setup',
+    customer: 'Advanced Research Institute',
+    projectManager: 'Dr. Michael Chang',
+    startDate: '2024-01-05',
+    endDate: '2024-08-20',
+    status: 'Completed',
+    phase: 'Project Closure',
+    totalValue: '$1,200,000',
+    rfqCount: 7,
+    quoteCount: 19,
+    poCount: 9,
+    description: 'State-of-the-art research laboratory with specialized equipment and safety systems'
+  },
+  {
+    id: 11,
+    projectCode: 'PRJ-2024-011',
+    projectName: 'Textile Manufacturing Upgrade',
+    customer: 'Fashion Textiles Co',
+    projectManager: 'Sofia Rodriguez',
+    startDate: '2024-04-01',
+    endDate: '2024-10-31',
+    status: 'Active',
+    phase: 'Equipment Installation',
+    totalValue: '$2,100,000',
+    rfqCount: 11,
+    quoteCount: 26,
+    poCount: 14,
+    description: 'Modernization of textile manufacturing equipment with digital control systems'
+  },
+  {
+    id: 12,
+    projectCode: 'PRJ-2024-012',
+    projectName: 'Food Processing Facility',
+    customer: 'Organic Foods Ltd',
+    projectManager: 'James Thompson',
+    startDate: '2024-03-15',
+    endDate: '2024-11-30',
+    status: 'On Hold',
+    phase: 'Regulatory Approval',
+    totalValue: '$4,800,000',
+    rfqCount: 4,
+    quoteCount: 8,
+    poCount: 2,
+    description: 'New food processing plant with automated packaging and quality control systems'
   }
 ];
 
@@ -172,10 +284,10 @@ export function ProjectsListView({
         }
       />
 
-      <div className="flex-1 p-6 space-y-6">
+      <div className="flex-1 p-4 space-y-4">
       <Card>
-        <CardContent>
-          <div className="flex items-center gap-4 mb-6">
+        <CardContent className="p-4">
+          <div className="flex items-center gap-3 mb-4">
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input
@@ -313,7 +425,7 @@ export function ProjectsListView({
           </div>
 
           {/* Project Summary Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mt-4">
             <Card>
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">

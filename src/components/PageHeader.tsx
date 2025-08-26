@@ -33,9 +33,9 @@ export function PageHeader({
   const canGoBack = navigationHistory.length > 1;
 
   return (
-    <div className="bg-white border-b border-gray-200 px-6 py-4">
+    <div className="bg-white border-b border-gray-200 px-4 py-3">
       {/* Breadcrumb Navigation */}
-      <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
+      <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
         <Home className="h-4 w-4" />
         {navigationHistory.map((item, index) => (
           <React.Fragment key={`${item.view}-${item.masterData}-${index}`}>

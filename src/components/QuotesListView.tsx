@@ -85,6 +85,118 @@ export const quotesData = [
     currency: 'USD',
     deliveryTime: '12-16 weeks',
     description: 'Advanced automation control systems'
+  },
+  {
+    id: 5,
+    quoteNumber: 'QUO-2024-005',
+    rfqReference: 'RFQ-2024-005',
+    supplier: 'Automotive Systems Inc',
+    project: 'PRJ-2024-006',
+    submittedDate: '2024-02-18',
+    validUntil: '2024-03-18',
+    status: 'Under Review',
+    totalAmount: '$1,180,000',
+    currency: 'USD',
+    deliveryTime: '10-14 weeks',
+    description: 'Complete production line with quality control'
+  },
+  {
+    id: 6,
+    quoteNumber: 'QUO-2024-006',
+    rfqReference: 'RFQ-2024-006',
+    supplier: 'DataCenter Pro',
+    project: 'PRJ-2024-007',
+    submittedDate: '2024-02-20',
+    validUntil: '2024-03-20',
+    status: 'Accepted',
+    totalAmount: '$785,000',
+    currency: 'USD',
+    deliveryTime: '6-8 weeks',
+    description: 'Server infrastructure and cooling systems'
+  },
+  {
+    id: 7,
+    quoteNumber: 'QUO-2024-007',
+    rfqReference: 'RFQ-2024-007',
+    supplier: 'Chemical Safety Systems',
+    project: 'PRJ-2024-008',
+    submittedDate: '2024-02-25',
+    validUntil: '2024-03-25',
+    status: 'Pending',
+    totalAmount: '$2,450,000',
+    currency: 'USD',
+    deliveryTime: '16-20 weeks',
+    description: 'Chemical processing equipment with safety systems'
+  },
+  {
+    id: 8,
+    quoteNumber: 'QUO-2024-008',
+    rfqReference: 'RFQ-2024-008',
+    supplier: 'Logistics Automation Ltd',
+    project: 'PRJ-2024-009',
+    submittedDate: '2024-02-22',
+    validUntil: '2024-03-22',
+    status: 'Under Review',
+    totalAmount: '$1,750,000',
+    currency: 'USD',
+    deliveryTime: '12-16 weeks',
+    description: 'Automated sorting and distribution systems'
+  },
+  {
+    id: 9,
+    quoteNumber: 'QUO-2024-009',
+    rfqReference: 'RFQ-2024-009',
+    supplier: 'Lab Equipment Pro',
+    project: 'PRJ-2024-010',
+    submittedDate: '2024-02-15',
+    validUntil: '2024-03-15',
+    status: 'Accepted',
+    totalAmount: '$435,000',
+    currency: 'USD',
+    deliveryTime: '8-10 weeks',
+    description: 'Complete laboratory setup with safety systems'
+  },
+  {
+    id: 10,
+    quoteNumber: 'QUO-2024-010',
+    rfqReference: 'RFQ-2024-010',
+    supplier: 'Textile Machinery Co',
+    project: 'PRJ-2024-011',
+    submittedDate: '2024-02-28',
+    validUntil: '2024-03-28',
+    status: 'Pending',
+    totalAmount: '$625,000',
+    currency: 'USD',
+    deliveryTime: '10-12 weeks',
+    description: 'Modern textile manufacturing equipment'
+  },
+  {
+    id: 11,
+    quoteNumber: 'QUO-2024-011',
+    rfqReference: 'RFQ-2024-011',
+    supplier: 'Food Processing Systems',
+    project: 'PRJ-2024-012',
+    submittedDate: '2024-03-01',
+    validUntil: '2024-04-01',
+    status: 'Under Review',
+    totalAmount: '$1,080,000',
+    currency: 'USD',
+    deliveryTime: '14-18 weeks',
+    description: 'Complete food processing and packaging line'
+  },
+  {
+    id: 12,
+    quoteNumber: 'QUO-2024-012',
+    rfqReference: 'RFQ-2024-012',
+    supplier: 'Quality Control Equipment',
+    project: 'PRJ-2024-001',
+    submittedDate: '2024-03-05',
+    validUntil: '2024-04-05',
+    status: 'Pending',
+    totalAmount: '$175,000',
+    currency: 'USD',
+    deliveryTime: '6-8 weeks',
+    description: 'Quality control and testing equipment package'
   }
 ];
 
@@ -137,10 +249,10 @@ export function QuotesListView({
         }
       />
 
-      <div className="flex-1 p-6 space-y-6">
+      <div className="flex-1 p-4 space-y-4">
       <Card>
-        <CardContent>
-          <div className="flex items-center gap-4 mb-6">
+        <CardContent className="p-4">
+          <div className="flex items-center gap-3 mb-4">
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input

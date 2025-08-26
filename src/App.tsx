@@ -183,7 +183,7 @@ export default function App() {
       case 'reports':
         return <ReportsView {...commonProps} />;
       default:
-        return <DashboardView {...commonProps} />;
+        return <DashboardView />;
     }
   };
 
@@ -228,7 +228,6 @@ export default function App() {
                     console.log('Saving item:', updatedItem);
                     setSelectedItem(updatedItem);
                   }}
-                  onBack={handleDetailPanelClose}
                   navigationHistory={navigationHistory}
                   onNavigate={handleBreadcrumbNavigation}
                   onResetNavigation={clearNavigationHistory}

@@ -187,3 +187,20 @@
 html {
   font-size: var(--font-size);
 }
+
+/* Prevent title duplication */
+#aurum-impex-logo {
+  position: relative;
+  z-index: 10;
+}
+
+.aurum-impex-title {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure no duplicate rendering */
+#aurum-impex-logo:before,
+#aurum-impex-logo:after {
+  content: none !important;
+}

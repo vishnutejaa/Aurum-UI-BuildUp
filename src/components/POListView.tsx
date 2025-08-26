@@ -85,6 +85,118 @@ export const poData = [
     currency: 'USD',
     paymentTerms: 'Net 45',
     description: 'Solar panel and battery systems'
+  },
+  {
+    id: 5,
+    poNumber: 'PO-2024-005',
+    quoteReference: 'QUO-2024-005',
+    supplier: 'Automotive Systems Inc',
+    project: 'PRJ-2024-006',
+    orderDate: '2024-02-25',
+    expectedDelivery: '2024-05-10',
+    status: 'Approved',
+    totalAmount: '$1,180,000',
+    currency: 'USD',
+    paymentTerms: 'Net 45',
+    description: 'Production line equipment with quality control'
+  },
+  {
+    id: 6,
+    poNumber: 'PO-2024-006',
+    quoteReference: 'QUO-2024-006',
+    supplier: 'DataCenter Pro',
+    project: 'PRJ-2024-007',
+    orderDate: '2024-02-28',
+    expectedDelivery: '2024-04-15',
+    status: 'In Transit',
+    totalAmount: '$785,000',
+    currency: 'USD',
+    paymentTerms: 'Net 30',
+    description: 'Server infrastructure and cooling systems'
+  },
+  {
+    id: 7,
+    poNumber: 'PO-2024-007',
+    quoteReference: 'QUO-2024-007',
+    supplier: 'Chemical Safety Systems',
+    project: 'PRJ-2024-008',
+    orderDate: '2024-03-01',
+    expectedDelivery: '2024-06-15',
+    status: 'Pending Approval',
+    totalAmount: '$2,450,000',
+    currency: 'USD',
+    paymentTerms: 'Net 60',
+    description: 'Chemical processing equipment with safety systems'
+  },
+  {
+    id: 8,
+    poNumber: 'PO-2024-008',
+    quoteReference: 'QUO-2024-008',
+    supplier: 'Logistics Automation Ltd',
+    project: 'PRJ-2024-009',
+    orderDate: '2024-03-05',
+    expectedDelivery: '2024-06-10',
+    status: 'Approved',
+    totalAmount: '$1,750,000',
+    currency: 'USD',
+    paymentTerms: 'Net 45',
+    description: 'Automated sorting and distribution systems'
+  },
+  {
+    id: 9,
+    poNumber: 'PO-2024-009',
+    quoteReference: 'QUO-2024-009',
+    supplier: 'Lab Equipment Pro',
+    project: 'PRJ-2024-010',
+    orderDate: '2024-02-20',
+    expectedDelivery: '2024-04-20',
+    status: 'Delivered',
+    totalAmount: '$435,000',
+    currency: 'USD',
+    paymentTerms: 'Net 30',
+    description: 'Laboratory equipment and safety systems'
+  },
+  {
+    id: 10,
+    poNumber: 'PO-2024-010',
+    quoteReference: 'QUO-2024-010',
+    supplier: 'Textile Machinery Co',
+    project: 'PRJ-2024-011',
+    orderDate: '2024-03-10',
+    expectedDelivery: '2024-05-20',
+    status: 'In Transit',
+    totalAmount: '$625,000',
+    currency: 'USD',
+    paymentTerms: 'Net 30',
+    description: 'Textile manufacturing equipment'
+  },
+  {
+    id: 11,
+    poNumber: 'PO-2024-011',
+    quoteReference: 'QUO-2024-011',
+    supplier: 'Food Processing Systems',
+    project: 'PRJ-2024-012',
+    orderDate: '2024-03-15',
+    expectedDelivery: '2024-07-15',
+    status: 'Pending Approval',
+    totalAmount: '$1,080,000',
+    currency: 'USD',
+    paymentTerms: 'Net 45',
+    description: 'Food processing and packaging equipment'
+  },
+  {
+    id: 12,
+    poNumber: 'PO-2024-012',
+    quoteReference: 'QUO-2024-012',
+    supplier: 'Quality Control Equipment',
+    project: 'PRJ-2024-001',
+    orderDate: '2024-03-20',
+    expectedDelivery: '2024-05-10',
+    status: 'Approved',
+    totalAmount: '$175,000',
+    currency: 'USD',
+    paymentTerms: 'Net 30',
+    description: 'Quality control and testing equipment'
   }
 ];
 
@@ -138,10 +250,10 @@ export function POListView({
         }
       />
 
-      <div className="flex-1 p-6 space-y-6">
+      <div className="flex-1 p-4 space-y-4">
       <Card>
-        <CardContent>
-          <div className="flex items-center gap-4 mb-6">
+        <CardContent className="p-4">
+          <div className="flex items-center gap-3 mb-4">
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input

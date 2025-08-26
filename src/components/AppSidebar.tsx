@@ -116,9 +116,9 @@ const masterDataGroups = [
 
 const projectSubItems = [
   { id: 'projects', label: 'All Projects', icon: FolderOpen },
-  { id: 'rfq', label: 'Project RFQs', icon: HelpCircle },
-  { id: 'quotes', label: 'Project Quotes', icon: MessageSquare },
-  { id: 'po', label: 'Project POs', icon: DollarSign },
+  // { id: 'rfq', label: 'Project RFQs', icon: HelpCircle },
+  // { id: 'quotes', label: 'Project Quotes', icon: MessageSquare },
+  // { id: 'po', label: 'Project POs', icon: DollarSign },
 ];
 
 export function AppSidebar({ currentView, onViewChange, currentMasterData, onMasterDataChange, onNavigate }: AppSidebarProps) {
@@ -137,6 +137,8 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
   return (
     <Sidebar>
       <SidebarContent>
+
+        
         <SidebarGroup>
           <SidebarGroupLabel>RFQ MANAGEMENT</SidebarGroupLabel>
           <SidebarGroupContent>

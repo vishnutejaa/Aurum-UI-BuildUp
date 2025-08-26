@@ -85,6 +85,118 @@ export const goodsData = [
     trackingNumber: 'TRK-987654321',
     carrier: 'Custom Freight',
     description: 'Solar panels and battery units - 50 units'
+  },
+  {
+    id: 5,
+    shipmentNumber: 'SH-2024-005',
+    poReference: 'PO-2024-005',
+    supplier: 'Automotive Parts Ltd',
+    project: 'PRJ-2024-006',
+    shippedDate: '2024-04-18',
+    expectedArrival: '2024-04-25',
+    actualArrival: '2024-04-23',
+    status: 'Received',
+    trackingNumber: 'TRK-555666777',
+    carrier: 'TNT Express',
+    description: 'Production line components - 45 units'
+  },
+  {
+    id: 6,
+    shipmentNumber: 'SH-2024-006',
+    poReference: 'PO-2024-006',
+    supplier: 'Digital Solutions Corp',
+    project: 'PRJ-2024-007',
+    shippedDate: '2024-04-20',
+    expectedArrival: '2024-04-27',
+    actualArrival: null,
+    status: 'In Transit',
+    trackingNumber: 'TRK-111222333',
+    carrier: 'DHL Express',
+    description: 'Server racks and cooling systems - 12 units'
+  },
+  {
+    id: 7,
+    shipmentNumber: 'SH-2024-007',
+    poReference: 'PO-2024-007',
+    supplier: 'Industrial Chemicals Inc',
+    project: 'PRJ-2024-008',
+    shippedDate: '2024-05-05',
+    expectedArrival: '2024-05-15',
+    actualArrival: null,
+    status: 'Shipped',
+    trackingNumber: 'TRK-444555666',
+    carrier: 'Custom Freight',
+    description: 'Chemical processing equipment - 8 units'
+  },
+  {
+    id: 8,
+    shipmentNumber: 'SH-2024-008',
+    poReference: 'PO-2024-008',
+    supplier: 'Global Logistics Group',
+    project: 'PRJ-2024-009',
+    shippedDate: '2024-04-12',
+    expectedArrival: '2024-04-19',
+    actualArrival: '2024-04-17',
+    status: 'Quality Check',
+    trackingNumber: 'TRK-777888999',
+    carrier: 'UPS Ground',
+    description: 'Automated sorting systems - 6 units'
+  },
+  {
+    id: 9,
+    shipmentNumber: 'SH-2024-009',
+    poReference: 'PO-2024-009',
+    supplier: 'Advanced Research Institute',
+    project: 'PRJ-2024-010',
+    shippedDate: '2024-03-15',
+    expectedArrival: '2024-03-22',
+    actualArrival: '2024-03-20',
+    status: 'Received',
+    trackingNumber: 'TRK-000111222',
+    carrier: 'FedEx International',
+    description: 'Laboratory equipment and safety systems - 20 units'
+  },
+  {
+    id: 10,
+    shipmentNumber: 'SH-2024-010',
+    poReference: 'PO-2024-010',
+    supplier: 'Fashion Textiles Co',
+    project: 'PRJ-2024-011',
+    shippedDate: '2024-05-01',
+    expectedArrival: '2024-05-08',
+    actualArrival: null,
+    status: 'In Transit',
+    trackingNumber: 'TRK-333444555',
+    carrier: 'DHL Express',
+    description: 'Textile manufacturing equipment - 18 units'
+  },
+  {
+    id: 11,
+    shipmentNumber: 'SH-2024-011',
+    poReference: 'PO-2024-011',
+    supplier: 'Organic Foods Ltd',
+    project: 'PRJ-2024-012',
+    shippedDate: '2024-04-28',
+    expectedArrival: '2024-05-05',
+    actualArrival: null,
+    status: 'Shipped',
+    trackingNumber: 'TRK-666777888',
+    carrier: 'Custom Freight',
+    description: 'Food processing equipment - 25 units'
+  },
+  {
+    id: 12,
+    shipmentNumber: 'SH-2024-012',
+    poReference: 'PO-2024-012',
+    supplier: 'TechSolutions Ltd',
+    project: 'PRJ-2024-001',
+    shippedDate: '2024-05-12',
+    expectedArrival: '2024-05-19',
+    actualArrival: null,
+    status: 'Shipped',
+    trackingNumber: 'TRK-999000111',
+    carrier: 'DHL Express',
+    description: 'Additional CNC components - 10 units'
   }
 ];
 
@@ -139,10 +251,10 @@ export function GoodsListView({
         }
       />
 
-      <div className="flex-1 p-6 space-y-6">
+      <div className="flex-1 p-4 space-y-4">
       <Card>
-        <CardContent>
-          <div className="flex items-center gap-4 mb-6">
+        <CardContent className="p-4">
+          <div className="flex items-center gap-3 mb-4">
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input
