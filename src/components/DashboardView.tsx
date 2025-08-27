@@ -248,7 +248,7 @@ export function DashboardView() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1>Dashboard</h1>
+          <h1>Overview</h1>
           <p className="text-gray-600 mt-1">Monitor project progress, deadlines, and supplier performance across your portfolio.</p>
         </div>
         <div className="flex gap-2">
