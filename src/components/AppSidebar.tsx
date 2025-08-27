@@ -170,7 +170,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
         
         {/* old: Dashboard within a labeled section */}
         {/* new: Remove section header - keep content only */}
-        <SidebarGroup>
+        <SidebarGroup className="p-0">
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
@@ -189,7 +189,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
 
         {/* old: RFQ MANAGEMENT with header */}
         {/* new: Remove section header */}
-        <SidebarGroup>
+        <SidebarGroup className="p-0">
           <SidebarGroupContent>
             <SidebarMenu>
 
@@ -334,7 +334,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
 
         {/* old: Master Data with header */}
         {/* new: Remove section header */}
-        <SidebarGroup>
+        <SidebarGroup className="p-0">
           <SidebarGroupContent>
             <SidebarMenu>
               {/* Master Data Categories - all groups are collapsible */}
