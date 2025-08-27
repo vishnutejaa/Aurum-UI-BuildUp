@@ -281,11 +281,11 @@ export function DetailPanel({
       label: "PO OUT",
       active: selectedSubSection === "po-out",
     },
-    {
-      id: "materials",
-      label: "MATERIALS",
-      active: selectedSubSection === "materials",
-    },
+    // {
+    //   id: "materials",
+    //   label: "MATERIALS",
+    //   active: selectedSubSection === "materials",
+    // },
   ];
 
   const renderRFQWorkspace = () => (

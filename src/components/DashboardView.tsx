@@ -48,13 +48,13 @@ export function DashboardView() {
     },
     {
       title: 'Open RFQs',
-      value: '28',
-      change: '+5',
+      value: '12',
+      change: '+2',
       changeType: 'increase', 
       icon: FileText,
       color: 'text-purple-600',
       bgColor: 'bg-purple-50',
-      subtitle: '7 expiring this week'
+      subtitle: '1 per project'
     },
     {
       title: 'Pending Quotes',
@@ -78,12 +78,14 @@ export function DashboardView() {
     }
   ];
 
+  // old: Multiple RFQs per project (5, 8, 2)
+  // new: One RFQ per project as per updated data structure
   const projectStatusOverview = [
     {
       projectCode: 'PRJ-2024-001',
       projectName: 'Manufacturing Equipment Upgrade',
       phase: 'Quote Evaluation',
-      rfqs: { total: 5, active: 3, closed: 2 },
+      rfqs: { total: 1, active: 1, closed: 0 },
       quotes: { total: 12, pending: 4, received: 6, evaluated: 2 },
       pos: { total: 2, approved: 1, pending: 1 },
       healthStatus: 'good'
@@ -92,7 +94,7 @@ export function DashboardView() {
       projectCode: 'PRJ-2024-002',
       projectName: 'Office Infrastructure Renewal',
       phase: 'RFQ Collection',
-      rfqs: { total: 8, active: 6, closed: 2 },
+      rfqs: { total: 1, active: 1, closed: 0 },
       quotes: { total: 15, pending: 10, received: 5, evaluated: 0 },
       pos: { total: 1, approved: 1, pending: 0 },
       healthStatus: 'warning'
@@ -101,7 +103,7 @@ export function DashboardView() {
       projectCode: 'PRJ-2024-003',
       projectName: 'Warehouse Automation System',
       phase: 'Requirements Gathering',
-      rfqs: { total: 2, active: 2, closed: 0 },
+      rfqs: { total: 1, active: 1, closed: 0 },
       quotes: { total: 3, pending: 3, received: 0, evaluated: 0 },
       pos: { total: 0, approved: 0, pending: 0 },
       healthStatus: 'good'
@@ -114,7 +116,7 @@ export function DashboardView() {
       type: 'urgent',
       category: 'deadline',
       title: 'RFQ Deadline Alert',
-      message: 'RFQ-2024-067 for Steel Components expires in 4 hours - no quotes received',
+      message: 'RFQ-2024-001 for Steel Components expires in 4 hours - no quotes received',
       project: 'PRJ-2024-001',
       time: '30 minutes ago',
       actionRequired: 'Extend deadline or contact suppliers'
@@ -144,7 +146,7 @@ export function DashboardView() {
       type: 'urgent',
       category: 'deadline',
       title: 'Quote Evaluation Overdue',
-      message: 'Quote evaluation for RFQ-2024-045 is 3 days overdue - project timeline at risk',
+      message: 'Quote evaluation for RFQ-2024-001 is 3 days overdue - project timeline at risk',
       project: 'PRJ-2024-001',
       time: '6 hours ago',
       actionRequired: 'Complete evaluation immediately'
@@ -162,7 +164,7 @@ export function DashboardView() {
     },
     { 
       type: 'RFQ', 
-      title: 'RFQ-2024-068 sent to 5 suppliers for Network Components', 
+      title: 'RFQ-2024-002 sent to 5 suppliers for Network Components', 
       time: '45 minutes ago', 
       status: 'sent', 
       user: 'Mike Johnson',
