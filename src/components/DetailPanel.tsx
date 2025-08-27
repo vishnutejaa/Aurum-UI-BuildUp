@@ -11,6 +11,7 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { Badge } from "./ui/badge";
 import { ScrollArea } from "./ui/scroll-area";
+import { Progress } from "./ui/progress";
 import {
   Select,
   SelectContent,
@@ -32,6 +33,7 @@ import {
   Package2,
   Eye,
   Search,
+  AlertTriangle,
 } from "lucide-react";
 import {
   getProjectRFQs,
@@ -39,6 +41,7 @@ import {
   getProjectPOs,
   getProjectGoods,
   getProjectSummary,
+  getProjectTimelineSummary,
   type ProjectRFQ,
   type ProjectQuote,
   type ProjectPO,
@@ -56,7 +59,10 @@ interface DetailPanelProps {
   onResetNavigation?: () => void;
 }
 
+// old: SubSectionType without overview
+// new: Add "overview" to support a project overview workspace
 type SubSectionType =
+  | "overview"
   | "rfq-in"
   | "rfq-out"
   | "quote-in"
@@ -76,6 +82,8 @@ export function DetailPanel({
 }: DetailPanelProps) {
   const [editedItem, setEditedItem] = useState(item);
   const [isEditing, setIsEditing] = useState(false);
+  // old: defaulted to "rfq-in"
+  // new: keep initial as "rfq-in" but we will set to "overview" for projects in useEffect
   const [selectedSubSection, setSelectedSubSection] =
     useState<SubSectionType>("rfq-in");
   
@@ -85,6 +93,7 @@ export function DetailPanel({
   const [projectPOs, setProjectPOs] = useState<ProjectPO[]>([]);
   const [projectGoods, setProjectGoods] = useState<ProjectGoods[]>([]);
   const [projectSummary, setProjectSummary] = useState<any>(null);
+  const [timelineSummary, setTimelineSummary] = useState<any>(null);
   
   const [projectMaterials, setProjectMaterials] = useState([
     {
@@ -166,11 +175,11 @@ export function DetailPanel({
   useEffect(() => {
     setEditedItem(item);
     setIsEditing(false);
-    // Set default sub-section based on item type
-    if (itemType === "rfq" || itemType === "project")
-      setSelectedSubSection("rfq-in");
-    else if (itemType === "quote")
-      setSelectedSubSection("quote-in");
+    // old: defaulted project to rfq-in
+    // new: set default to overview when itemType is project
+    if (itemType === "project") setSelectedSubSection("overview");
+    else if (itemType === "rfq") setSelectedSubSection("rfq-in");
+    else if (itemType === "quote") setSelectedSubSection("quote-in");
     else if (itemType === "po") setSelectedSubSection("po-in");
     else setSelectedSubSection("materials");
     
@@ -182,12 +191,14 @@ export function DetailPanel({
       const pos = getProjectPOs(item.id);
       const goods = getProjectGoods(item.id);
       const summary = getProjectSummary(item.id);
+      const timeline = getProjectTimelineSummary(item.id);
       
       setProjectRFQs(rfqs);
       setProjectQuotes(quotes);
       setProjectPOs(pos);
       setProjectGoods(goods);
       setProjectSummary(summary);
+      setTimelineSummary(timeline);
     }
   }, [item, itemType]);
 
@@ -251,6 +262,11 @@ export function DetailPanel({
   };
 
   const navigationButtons = [
+    {
+      id: "overview",
+      label: "OVERVIEW",
+      active: selectedSubSection === "overview",
+    },
     {
       id: "rfq-in",
       label: "RFQ IN",
@@ -1318,6 +1334,165 @@ export function DetailPanel({
         <ScrollArea className="flex-1">
           <div className="p-6">
             <div className="space-y-6">
+              {selectedSubSection === "overview" && (
+                <div className="space-y-6">
+                  {/* Quick KPIs */}
+                  <div className="grid grid-cols-4 gap-4">
+                    <Card>
+                      <CardContent className="p-4 text-center">
+                        <div className="text-2xl font-bold text-blue-600">{projectSummary?.rfqs?.total || 0}</div>
+                        <div className="text-sm text-gray-600">RFQs</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4 text-center">
+                        <div className="text-2xl font-bold text-green-600">{projectSummary?.quotes?.total || 0}</div>
+                        <div className="text-sm text-gray-600">Quotes</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4 text-center">
+                        <div className="text-2xl font-bold text-purple-600">{projectSummary?.pos?.total || 0}</div>
+                        <div className="text-sm text-gray-600">POs</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4 text-center">
+                        <div className="text-2xl font-bold text-indigo-600">{projectSummary?.goods?.total || 0}</div>
+                        <div className="text-sm text-gray-600">Shipments</div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  {/* Timeline and critical alerts */}
+                  <div className="grid grid-cols-3 gap-4">
+                    <Card className="col-span-2">
+                      <CardHeader className="pb-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Calendar className="h-5 w-5 text-orange-600" />
+                            <CardTitle className="text-base">Timeline</CardTitle>
+                          </div>
+                          {timelineSummary?.nextDeadline && (
+                            <Badge variant="outline" className="text-xs">Next: {timelineSummary.nextDeadline}</Badge>
+                          )}
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid grid-cols-3 gap-3 text-sm">
+                          <div>
+                            <p className="text-gray-500">Active RFQs</p>
+                            <p className="font-semibold">{timelineSummary?.activeRFQs || 0}</p>
+                            <Progress value={Math.min(100, (timelineSummary?.activeRFQs || 0) * 10)} className="h-2" />
+                          </div>
+                          <div>
+                            <p className="text-gray-500">Pending POs</p>
+                            <p className="font-semibold">{timelineSummary?.pendingPOs || 0}</p>
+                            <Progress value={Math.min(100, (timelineSummary?.pendingPOs || 0) * 10)} className="h-2" />
+                          </div>
+                          <div>
+                            <p className="text-gray-500">In Transit</p>
+                            <p className="font-semibold">{timelineSummary?.inTransitGoods || 0}</p>
+                            <Progress value={Math.min(100, (timelineSummary?.inTransitGoods || 0) * 10)} className="h-2" />
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardHeader className="pb-3">
+                        <div className="flex items-center gap-2">
+                          <AlertTriangle className="h-5 w-5 text-red-600" />
+                          <CardTitle className="text-base">Critical</CardTitle>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <ul className="text-sm list-disc pl-5 space-y-1 text-red-700">
+                          {timelineSummary?.nextDeadline ? (
+                            <li>Deadline approaching on {timelineSummary.nextDeadline}</li>
+                          ) : (
+                            <li>No immediate deadlines</li>
+                          )}
+                          {projectSummary?.quotes?.pending ? (
+                            <li>{projectSummary.quotes.pending} quotes pending review</li>
+                          ) : (
+                            <li>No pending quotes</li>
+                          )}
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  {/* Latest records */}
+                  <div className="grid grid-cols-3 gap-4">
+                    <Card>
+                      <CardHeader className="pb-3">
+                        <div className="flex items-center gap-2">
+                          <FileText className="h-5 w-5 text-blue-600" />
+                          <CardTitle className="text-base">Latest RFQ</CardTitle>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        {projectRFQs[0] ? (
+                          <div className="text-sm">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Badge variant="outline" className="font-mono text-xs">{projectRFQs[0].rfqNumber}</Badge>
+                              <Badge className={getStatusColor(projectRFQs[0].status)}>{projectRFQs[0].status}</Badge>
+                            </div>
+                            <p className="font-medium">{projectRFQs[0].title}</p>
+                            <p className="text-gray-600">{projectRFQs[0].description}</p>
+                          </div>
+                        ) : (
+                          <p className="text-gray-500">No RFQs yet</p>
+                        )}
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardHeader className="pb-3">
+                        <div className="flex items-center gap-2">
+                          <DollarSign className="h-5 w-5 text-green-600" />
+                          <CardTitle className="text-base">Latest Quote</CardTitle>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        {projectQuotes[0] ? (
+                          <div className="text-sm">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Badge variant="outline" className="font-mono text-xs">{projectQuotes[0].quoteNumber}</Badge>
+                              <Badge className={getStatusColor(projectQuotes[0].status)}>{projectQuotes[0].status}</Badge>
+                            </div>
+                            <p className="text-gray-600">Supplier: {projectQuotes[0].supplier}</p>
+                            <p className="font-medium">Amount: {projectQuotes[0].totalAmount}</p>
+                          </div>
+                        ) : (
+                          <p className="text-gray-500">No quotes yet</p>
+                        )}
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardHeader className="pb-3">
+                        <div className="flex items-center gap-2">
+                          <FileText className="h-5 w-5 text-purple-600" />
+                          <CardTitle className="text-base">Latest PO</CardTitle>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        {projectPOs[0] ? (
+                          <div className="text-sm">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Badge variant="outline" className="font-mono text-xs">{projectPOs[0].poNumber}</Badge>
+                              <Badge className={getStatusColor(projectPOs[0].status)}>{projectPOs[0].status}</Badge>
+                            </div>
+                            <p className="text-gray-600">Supplier: {projectPOs[0].supplier}</p>
+                            <p className="font-medium">Amount: {projectPOs[0].totalAmount}</p>
+                          </div>
+                        ) : (
+                          <p className="text-gray-500">No purchase orders yet</p>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              )}
               {selectedSubSection === "rfq-in" && renderRFQWorkspace()}
               {selectedSubSection === "rfq-out" && renderRFQOutWorkspace()}
               {selectedSubSection === "quote-in" && renderQuoteWorkspace()}
