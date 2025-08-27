@@ -78,14 +78,17 @@ const masterDataGroups = [
     items: [
       { id: 'customers', label: 'Customers', icon: Users },
       { id: 'suppliers', label: 'Suppliers', icon: Building },
-      { id: 'users', label: 'Users', icon: Users },
+      // old: { id: 'users', label: 'Users', icon: Users },
+      // new: Users moved out as a primary menu item (User Management)
       { id: 'manufacturers', label: 'Manufacturers', icon: Factory },
       { id: 'competitors', label: 'Competitors', icon: Target },
     ]
   },
   {
     id: 'locations',
-    label: 'Locations & Logistics',
+    // old: label: 'Locations & Logistics',
+    // new: rename to make it a config group per request
+    label: 'Locations & Logistics Config',
     icon: MapPin,
     items: [
       { id: 'offices', label: 'Offices', icon: Building },
@@ -97,7 +100,9 @@ const masterDataGroups = [
   },
   {
     id: 'bidding',
-    label: 'Bidding & Procurement',
+    // old: label: 'Bidding & Procurement',
+    // new: rename to clarify this is configuration
+    label: 'Bidding & Procurement Config',
     icon: FileText,
     items: [
       { id: 'bid-types', label: 'Bid Types', icon: FileText },
@@ -116,7 +121,8 @@ const masterDataGroups = [
       { id: 'organization', label: 'Organization', icon: Building },
       { id: 'currencies', label: 'Currencies', icon: DollarSign },
       { id: 'extra-cost-types', label: 'Extra Cost Types', icon: DollarSign },
-      { id: 'configurations', label: 'Configurations', icon: Settings },
+      // old: { id: 'configurations', label: 'Configurations', icon: Settings },
+      // new: remove generic configurations submenu per request
       { id: 'email-formats', label: 'Email Formats', icon: Mail },
       { id: 'page-permissions', label: 'Page Permissions', icon: Shield },
     ]
@@ -149,18 +155,22 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
         {/* old: no header/logo at the top */}
         {/* new: sidebar header with company logo */}
         <SidebarHeader className="px-3 pt-3 pb-1">
-          <div className="flex items-center">
+          <div className="flex flex-col items-start">
+            {/* old: only logo image */}
+            {/* new: logo image with product name caption below */}
             <div className="bg-gray-200 rounded p-1">
               <img src={aurumLogo} alt="AURUM IMPEX" className="h-16 w-auto" />
             </div>
+            <span className="mt-2 text-sm font-medium text-muted-foreground tracking-wide text-center semi-bold">
+              Procurement Management System
+            </span>
           </div>
         </SidebarHeader>
 
         
-        {/* old: Dashboard was inside RFQ MANAGEMENT */}
-        {/* new: Dashboard as separate section */}
+        {/* old: Dashboard within a labeled section */}
+        {/* new: Remove section header - keep content only */}
         <SidebarGroup>
-          <SidebarGroupLabel>DASHBOARD</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
@@ -177,10 +187,9 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* old: RFQ MANAGEMENT section */}
-        {/* new: RFQ MANAGEMENT section - reorganized */}
+        {/* old: RFQ MANAGEMENT with header */}
+        {/* new: Remove section header */}
         <SidebarGroup>
-          <SidebarGroupLabel>RFQ MANAGEMENT</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
 
@@ -262,24 +271,37 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
               </SidebarMenuItem>
 
               <SidebarMenuItem>
+                {/* old: active navigable Goods */}
+                {/* new: temporarily disabled for demo with tooltip */}
                 <SidebarMenuButton 
-                  onClick={() => handleNavigation('goods')}
-                  isActive={currentView === 'goods'}
+                  // onClick={() => handleNavigation('goods')}
+                  // isActive={currentView === 'goods'}
+                  onClick={() => {}}
+                  isActive={false}
                   className="pl-0"
+                  disabled
+                  tooltip="Under development"
+                  aria-disabled
                 >
                   <ShoppingCart className="h-4 w-4" />
-                  <span>Goods</span>
+                  {/* <span>Goods</span> */}
+                  <span>Goods (Under Development)</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
 
               <SidebarMenuItem>
+                {/* old: active navigable Payments */}
+                {/* new: temporarily disabled for demo with tooltip */}
                 <SidebarMenuButton 
-                  onClick={() => handleNavigation('payments')}
-                  isActive={currentView === 'payments'}
+                  onClick={() => {}}
+                  isActive={false}
                   className="pl-0"
+                  disabled
+                  tooltip="Under development"
+                  aria-disabled
                 >
                   <CreditCard className="h-4 w-4" />
-                  <span>Payments</span>
+                  <span>Payments (Under Development)</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
 
@@ -293,15 +315,26 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                   <span>Reports & Analytics</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
+
+              {/* new: User Management as a primary menu item */}
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                  onClick={() => handleNavigation('masters', 'users')}
+                  isActive={currentView === 'masters' && currentMasterData === 'users'}
+                  className="pl-0"
+                >
+                  <Users className="h-4 w-4" />
+                  <span>User Management</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
               
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* old: Master Data Section - inline label */}
-        {/* new: Master Data Section - proper group structure */}
+        {/* old: Master Data with header */}
+        {/* new: Remove section header */}
         <SidebarGroup>
-          <SidebarGroupLabel>MASTER DATA</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {/* Master Data Categories - all groups are collapsible */}
@@ -313,7 +346,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                         <SidebarMenuButton 
                           onClick={() => handleNavigation('masters', group.id)}
                           isActive={currentView === 'masters' && currentMasterData === group.id}
-                          className="pl-6"
+                          className="pl-0"
                         >
                           <group.icon className="h-4 w-4" />
                           <span>{group.label}</span>
