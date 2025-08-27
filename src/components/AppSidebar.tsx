@@ -177,7 +177,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('dashboard')}
                   isActive={currentView === 'dashboard'}
-                  className="pl-0"
+                  className="pl-3"
                 >
                   <Database className="h-4 w-4" />
                   <span>Dashboard</span>
@@ -201,7 +201,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                     <SidebarMenuButton 
                       onClick={() => handleNavigation('projects')}
                       isActive={currentView === 'projects' || currentView.startsWith('project-')}
-                      className="pl-0"
+                      className="pl-3"
                     >
                       <Briefcase className="h-4 w-4" />
                       <span>Projects</span>
@@ -241,7 +241,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('rfq')}
                   isActive={currentView === 'rfq'}
-                  className="pl-0"
+                  className="pl-3"
                 >
                   <HelpCircle className="h-4 w-4" />
                   <span>RFQs</span>
@@ -252,7 +252,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('quotes')}
                   isActive={currentView === 'quotes'}
-                  className="pl-0"
+                  className="pl-3"
                 >
                   <MessageSquare className="h-4 w-4" />
                   <span>Quotes</span>
@@ -263,7 +263,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('po')}
                   isActive={currentView === 'po'}
-                  className="pl-0"
+                  className="pl-3"
                 >
                   <DollarSign className="h-4 w-4" />
                   <span>Purchase Orders</span>
@@ -278,7 +278,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                   // isActive={currentView === 'goods'}
                   onClick={() => {}}
                   isActive={false}
-                  className="pl-0"
+                  className="pl-3"
                   disabled
                   tooltip="Under development"
                   aria-disabled
@@ -295,7 +295,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => {}}
                   isActive={false}
-                  className="pl-0"
+                  className="pl-3"
                   disabled
                   tooltip="Under development"
                   aria-disabled
@@ -309,7 +309,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('reports')}
                   isActive={currentView === 'reports'}
-                  className="pl-0"
+                  className="pl-3"
                 >
                   <TrendingUp className="h-4 w-4" />
                   <span>Reports & Analytics</span>
@@ -321,7 +321,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('masters', 'users')}
                   isActive={currentView === 'masters' && currentMasterData === 'users'}
-                  className="pl-0"
+                  className="pl-3"
                 >
                   <Users className="h-4 w-4" />
                   <span>User Management</span>
@@ -346,7 +346,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                         <SidebarMenuButton 
                           onClick={() => handleNavigation('masters', group.id)}
                           isActive={currentView === 'masters' && currentMasterData === group.id}
-                          className="pl-0"
+                          className="pl-2"
                         >
                           <group.icon className="h-4 w-4" />
                           <span>{group.label}</span>
