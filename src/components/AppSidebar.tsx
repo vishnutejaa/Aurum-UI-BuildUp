@@ -154,8 +154,8 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
       <SidebarContent>
         {/* old: no header/logo at the top */}
         {/* new: sidebar header with company logo */}
-        <SidebarHeader className="px-3 pt-3 pb-1">
-          <div className="flex flex-col items-start">
+        <SidebarHeader className="px-3 pt-3 pb-1 pl-4">
+          <div className="flex flex-col items-center">
             {/* old: only logo image */}
             {/* new: logo image with product name caption below */}
             <div className="bg-gray-200 rounded p-1">
@@ -177,7 +177,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('dashboard')}
                   isActive={currentView === 'dashboard'}
-                  className="pl-3"
+                  className="pl-4"
                 >
                   <Database className="h-4 w-4" />
                   <span>Dashboard</span>
@@ -201,7 +201,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                     <SidebarMenuButton 
                       onClick={() => handleNavigation('projects')}
                       isActive={currentView === 'projects' || currentView.startsWith('project-')}
-                      className="pl-3"
+                      className="pl-4"
                     >
                       <Briefcase className="h-4 w-4" />
                       <span>Projects</span>
@@ -241,7 +241,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('rfq')}
                   isActive={currentView === 'rfq'}
-                  className="pl-3"
+                  className="pl-4"
                 >
                   <HelpCircle className="h-4 w-4" />
                   <span>RFQs</span>
@@ -252,7 +252,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('quotes')}
                   isActive={currentView === 'quotes'}
-                  className="pl-3"
+                  className="pl-4"
                 >
                   <MessageSquare className="h-4 w-4" />
                   <span>Quotes</span>
@@ -263,7 +263,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('po')}
                   isActive={currentView === 'po'}
-                  className="pl-3"
+                  className="pl-4"
                 >
                   <DollarSign className="h-4 w-4" />
                   <span>Purchase Orders</span>
@@ -278,7 +278,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                   // isActive={currentView === 'goods'}
                   onClick={() => {}}
                   isActive={false}
-                  className="pl-3"
+                  className="pl-4"
                   disabled
                   tooltip="Under development"
                   aria-disabled
@@ -295,7 +295,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => {}}
                   isActive={false}
-                  className="pl-3"
+                  className="pl-4"
                   disabled
                   tooltip="Under development"
                   aria-disabled
@@ -309,7 +309,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('reports')}
                   isActive={currentView === 'reports'}
-                  className="pl-3"
+                  className="pl-4"
                 >
                   <TrendingUp className="h-4 w-4" />
                   <span>Reports & Analytics</span>
@@ -321,7 +321,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                 <SidebarMenuButton 
                   onClick={() => handleNavigation('masters', 'users')}
                   isActive={currentView === 'masters' && currentMasterData === 'users'}
-                  className="pl-3"
+                  className="pl-4"
                 >
                   <Users className="h-4 w-4" />
                   <span>User Management</span>
@@ -346,7 +346,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
                         <SidebarMenuButton 
                           onClick={() => handleNavigation('masters', group.id)}
                           isActive={currentView === 'masters' && currentMasterData === group.id}
-                          className="pl-2"
+                          className="pl-4"
                         >
                           <group.icon className="h-4 w-4" />
                           <span>{group.label}</span>
