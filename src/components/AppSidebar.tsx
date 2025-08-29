@@ -154,23 +154,24 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
       <SidebarContent>
         {/* old: no header/logo at the top */}
         {/* new: sidebar header with company logo */}
-        <SidebarHeader className="px-3 pt-3 pb-1 pl-4">
+        <SidebarHeader className="px-2 pt-2 pb-1">
           <div className="flex flex-col items-center">
             {/* old: only logo image */}
             {/* new: logo image with product name caption below */}
             <div className="bg-gray-200 rounded p-1">
               <img src={aurumLogo} alt="AURUM IMPEX" className="h-16 w-auto" />
             </div>
-            <span className="mt-2 text-sm font-medium text-muted-foreground tracking-wide text-center semi-bold">
-              Procurement Management System
-            </span>
           </div>
         </SidebarHeader>
+
+        <span className="mt-2 text-sm-6 font-medium text-muted-foreground tracking-wide text-left semi-bold pl-6">
+              Procurement Management System
+        </span>
 
         
         {/* old: Dashboard within a labeled section */}
         {/* new: Remove section header - keep content only */}
-        <SidebarGroup className="p-0">
+        <SidebarGroup className="p-0 pl-4">
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
@@ -189,7 +190,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
 
         {/* old: RFQ MANAGEMENT with header */}
         {/* new: Remove section header */}
-        <SidebarGroup className="p-0">
+        <SidebarGroup className="p-0 pl-4">
           <SidebarGroupContent>
             <SidebarMenu>
 
@@ -334,7 +335,7 @@ export function AppSidebar({ currentView, onViewChange, currentMasterData, onMas
 
         {/* old: Master Data with header */}
         {/* new: Remove section header */}
-        <SidebarGroup className="p-0">
+        <SidebarGroup className="p-0 pl-4">
           <SidebarGroupContent>
             <SidebarMenu>
               {/* Master Data Categories - all groups are collapsible */}
