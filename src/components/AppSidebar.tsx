@@ -88,7 +88,7 @@ const masterDataGroups = [
     id: 'locations',
     // old: label: 'Locations & Logistics',
     // new: rename to make it a config group per request
-    label: 'Locations & Logistics Configuration',
+    label: 'Locations & Logistics Config',
     icon: MapPin,
     items: [
       { id: 'offices', label: 'Offices', icon: Building },
@@ -102,7 +102,7 @@ const masterDataGroups = [
     id: 'bidding',
     // old: label: 'Bidding & Procurement',
     // new: rename to clarify this is configuration
-    label: 'Bidding & Procurement Configuration',
+    label: 'Bidding & Procurement Config',
     icon: FileText,
     items: [
       { id: 'bid-types', label: 'Bid Types', icon: FileText },
