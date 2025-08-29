@@ -92,7 +92,7 @@ const LiquidSvg = () => (
 
 export function Header() {
   return (
-    <header className="border-b bg-white px-6 py-6 flex items-center justify-between">
+    <header className="border-b bg-white px-3 py-3 flex items-center justify-between">
       <div className="flex items-center gap-4">
         {/* old: Animated Blue Liquid Logo Title */}
         {/* new: commented out logo for now - keeping sidebar logo instead */}
